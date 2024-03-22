@@ -12,11 +12,31 @@ void main() {
     ),
   ));
 }
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class BoundingBoxPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint paint = Paint()
+      ..color = Colors.red
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.0;
+
+    final Rect rect = Rect.fromLTWH(
+        50, 50, 100, 100); // Thay đổi giá trị để vẽ bounding box tùy ý
+    canvas.drawRect(rect, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
+  }
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -109,6 +129,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.pop(context);
                       },
                     )),
+                    Stack(
+                      children: [
+                        Image.asset(
+                            'path/to/your/image.jpg'), // Thay đổi đường dẫn đến hình ảnh của bạn
+                        CustomPaint(
+                          painter: BoundingBoxPainter(),
+                          child:
+                              Container(), // Container rỗng để vẽ bounding box
+                        ),
+                      ],
+                    ),
                     Expanded(
                         child: InkWell(
                       child: SizedBox(
